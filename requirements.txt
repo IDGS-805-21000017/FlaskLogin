@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+Flask-CORS
+Flask-Login
+PyMySQL
+cryptography
+python-dotenv
+sqlalchemy

@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block title %}Tienda{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">Productos Disponibles</h2>
+            {% if g.user.is_authenticated and g.user.role == 'ADMIN' %}
+                <a href="{{ url_for('registro_producto') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">
+                    Agregar Producto
+                </a>
+            {% endif %}
+        </div>
+        
+        {% if productos %}
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="border p-3 text-left">Nombre</th>
+                            <th class="border p-3 text-left">Precio</th>
+                            <th class="border p-3 text-left">Cantidad</th>
+                            <th class="border p-3 text-left">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr class="hover:bg-gray-50">
+                            <td class="border p-3">{{ producto.nombre }}</td>
+                            <td class="border p-3">${{ "%.2f"|format(producto.precio) }}</td>
+                            <td class="border p-3">{{ producto.cantidad }}</td>
+                            <td class="border p-3">
+                                {% if producto.cantidad > 0 %}
+                                    <form action="{{ url_for('realizar_pedido') }}" method="POST" class="flex items-center space-x-2">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                                        <input type="number" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1" 
+                                               class="w-20 p-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-200">
+                                            Comprar
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <span class="text-red-500">Agotado</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-8">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <p class="text-gray-500 text-lg">No hay productos disponibles en este momento.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

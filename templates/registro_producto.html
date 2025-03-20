@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Registrar Producto{% endblock %}
+{% block content %}
+<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-4">Registrar Producto</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-4">
+            <label class="block">Nombre</label>
+            {{ form.nombre(class="w-full p-2 border rounded") }}
+        </div>
+        <div class="mb-4">
+            <label class="block">Precio</label>
+            {{ form.precio(class="w-full p-2 border rounded") }}
+        </div>
+        <div class="mb-4">
+            <label class="block">Cantidad</label>
+            {{ form.cantidad(class="w-full p-2 border rounded") }}
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
+    </form>
+</div>
+{% endblock %}
