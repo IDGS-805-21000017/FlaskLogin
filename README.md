@@ -14,9 +14,8 @@ Este es un sistema de tienda web desarrollado con Flask que implementa autentica
 
 ## 📋 Requisitos Previos
 
-- Python 3.8 o superior
+- Python 3.10 o superior
 - MySQL Server
-- pip (gestor de paquetes de Python)
 
 ## 🔧 Instalación
 
